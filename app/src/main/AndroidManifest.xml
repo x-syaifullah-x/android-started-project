@@ -13,10 +13,6 @@
         android:theme="@style/Theme.Application">
 
         <activity
-            android:name=".presentation.MainActivity"
-            android:theme="@style/Theme.Application.NoActionBar" />
-
-        <activity
             android:name=".presentation.SplashActivity"
             android:theme="@style/Theme.Application.Splash">
             <intent-filter>
@@ -25,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.MainActivity"
+            android:theme="@style/Theme.Application.NoActionBar" />
     </application>
 
 </manifest>
