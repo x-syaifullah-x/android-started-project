@@ -9,7 +9,7 @@ ext.build_versions = build_versions
 
 ext {
     vGradle = "4.2.1"
-    vKotlin = "1.5.0"
+    vKotlin = "1.5.10"
 
     vAndroidModuleTest = "0.0.100"
 }
