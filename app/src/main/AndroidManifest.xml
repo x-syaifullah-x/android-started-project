@@ -23,8 +23,7 @@
         </activity>
 
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.home.MainActivity"
             android:theme="@style/Theme.Application.NoActionBar" />
     </application>
-
 </manifest>

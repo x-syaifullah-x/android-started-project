@@ -1,5 +1,6 @@
 package id.xxx.example.presentation
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -7,9 +8,9 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
+import id.xxx.example.presentation.home.MainActivity
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
