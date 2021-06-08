@@ -17,6 +17,7 @@ ext {
 static def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.mavenCentral()
+    handler.mavenLocal()
     handler.maven {
         url 'https://jcenter.bintray.com'
         url 'https://oss.sonatype.org/content/repositories/snapshots'
