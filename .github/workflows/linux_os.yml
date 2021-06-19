@@ -1,0 +1,82 @@
+name: LINUX_OS_TEST
+
+on:
+  push:
+    branches:
+      - started-android
+      - started-android-library
+#  pull_request:
+#    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [ 29 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup directory AVD
+        run: |
+          ANDROID_AVD_DIR=~/.android/avd
+          mkdir -pv $ANDROID_AVD_DIR
+          sudo mount -v none -t tmpfs -o rw,noatime,nodiratime,size=100%,nr_inodes=0,mode=755,uid=$USER,gid=$USER,inode64 $ANDROID_AVD_DIR
+
+      - name: Setup directory Gradle
+        run: |
+          GRADLE_DIR=~/.gradle
+          mkdir -pv $GRADLE_DIR
+          sudo mount -v none -t tmpfs -o rw,noatime,nodiratime,size=100%,nr_inodes=0,mode=755,uid=$USER,gid=$USER,inode64 $GRADLE_DIR
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "oracle"
+
+      - name: Gradle cache
+        uses: actions/cache@v4
+        id: gradle-cache
+        with:
+          path: |
+            ~/.gradle
+            ~/.m2
+          key: gradle-${{ github.job }}-${{ hashFiles('versions.gradle') }}
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            /usr/local/lib/android/sdk/system-images
+          key: avd-${{ github.job }}-${{ matrix.api-level }}
+
+      - name: Generate keystore
+        run: |
+          [ ! -d ~/.android ] && mkdir ~/.android
+          echo y | keytool -genkey -dname "cn=debug, ou=debug, o=debug, c=debug" -alias androiddebugkey -keypass android --storepass android -keyalg RSA -keystore ~/.android/debug.keystore -validity 10000
+
+      - name: Replace org.gradle.jvmargs
+        run: |
+          ORG_GRADLE_JVM=`cat gradle.properties | grep org.gradle.jvmargs`
+          sed -i 's/'"${ORG_GRADLE_JVM}"'/org.gradle.jvmargs=-Xmx8192m -Dfile.encoding=UTF-8/g' gradle.properties
+          cat gradle.properties | grep org.gradle.jvmargs
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Running AVD
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -nocache -no-boot-anim -no-snapshot -no-snapshot-load -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -camera-back none -accel on -qemu -cpu host,kvm=on -smp $(nproc) -m $(expr 1024 \* 16)
+          disable-animations: true
+          script: |
+            ./gradlew clean build

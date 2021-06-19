@@ -1,0 +1,14 @@
+pluginManagement {
+    apply from: "versions.gradle"
+
+    addRepos(repositories)
+}
+
+plugins {
+    //noinspection GradlePluginVersion
+    id "com.android.library" version "$vGradle" apply false
+    id "org.jetbrains.kotlin.android" version "$vKotlin" apply false
+}
+
+rootProject.name = "Started Project Android"
+include(":started-android-library")
