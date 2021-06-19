@@ -1,5 +1,0 @@
-rootProject.name = "Android Started Project"
-
-include(
-        ":app"
-)
