@@ -1,0 +1,3 @@
+rootProject.name = "Started Project Xposed Module"
+
+include ':app'
