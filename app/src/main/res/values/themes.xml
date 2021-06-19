@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="Theme.Application" parent="Theme.AppCompat.Light">
+        <!-- Status bar color. -->
+        <item name="colorPrimaryDark">?android:colorBackground</item>
+        <!-- Status bar color. -->
+    </style>
+
+    <style name="Theme.Application.NoActionBar" parent="Theme.Application">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Application.Splash" parent="Theme.Application.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+</resources>

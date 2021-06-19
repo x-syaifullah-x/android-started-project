@@ -1,0 +1,114 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+}
+
+android {
+    namespace build_versions.namespace
+    testNamespace "${namespace}.test"
+
+    compileSdk build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        minSdk build_versions.min_sdk
+        targetSdk build_versions.target_sdk
+        versionCode build_versions.code
+        versionName build_versions.name
+
+        testInstrumentationRunner "runner.AndroidJUnitRunner"
+
+        resConfigs "en"
+    }
+
+    signingConfigs {
+        def home_dir = System.getProperty("user.home")
+        def store_file = file("$home_dir/.android/debug.keystore")
+        def store_password = "android"
+        def key_alias = "androiddebugkey"
+        def key_password = "android"
+
+        release {
+            storeFile store_file
+            storePassword store_password
+            keyAlias key_alias
+            keyPassword key_password
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+        }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            debuggable false
+            jniDebuggable false
+            signingConfig signingConfigs.release
+        }
+    }
+
+    buildFeatures {
+        buildConfig true
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_21.toString()
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
+    }
+
+//    sourceSets {
+//        androidTest {
+//            manifest.srcFile "src/androidTest/AndroidManifest.xml"
+//        }
+//        debug {
+//            java.srcDirs = ["src/main/kotlin"]
+//        }
+//        main {
+//            java.srcDirs = ["src/main/java",]
+//            java.srcDirs = ["src/main/java"]
+//            res.srcDirs = ["$rootDir/app/src/main/res"]
+//            java.srcDirs = ["$rootDir/app/src/main"]
+//            manifest.srcFile "AndroidManifest.xml"
+//            proto { srcDir "proto" }
+//        }
+//    }
+
+//    packagingOptions {
+//        exclude "META-INF/**"
+//        exclude "okhttp3/**"
+//        exclude "kotlin/**"
+//        exclude "org/**"
+//        exclude "**.properties"
+//        exclude "**.bin"
+//        exclude "kotlin-tooling-metadata.json"
+//    }
+}
+
+dependencies {
+
+    implementation "androidx.appcompat:appcompat:$vAndroidxAppCompat"
+    implementation "androidx.constraintlayout:constraintlayout:$vAndroidxConstrainLayout"
+    implementation "androidx.test.espresso:espresso-idling-resource:$vAndroidxTestEspresso"
+
+    debugImplementation "androidx.fragment:fragment-testing:$vAndroidxFragment"
+
+    androidTestImplementation "androidx.test.ext:junit-ktx:$vAndroidxTestExtJunit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$vAndroidxTestEspresso"
+
+    testImplementation "junit:junit:$vJunit"
+}

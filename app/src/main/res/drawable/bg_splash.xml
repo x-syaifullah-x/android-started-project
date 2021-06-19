@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/splash_window_background"
+        android:drawable="@drawable/splash_window_background" />
+
+    <item
+        android:id="@+id/splash_icon"
+        android:drawable="@drawable/splash_icon"
+        android:gravity="center"
+        tools:bottom="100dp"
+        tools:left="25dp"
+        tools:right="25dp"
+        tools:top="100dp" />
+</layer-list>
