@@ -4,6 +4,7 @@
 int main() {
     Test *test = new Test();
     std::cout << test->data << std::endl;
+    std::cout << "Hello from C++" << std::endl;
     delete test;
     return 0;
 }
