@@ -1,6 +1,6 @@
 def build_versions = [:]
-build_versions.min_sdk_version = 24 /* android 7.0 */
-build_versions.target_sdk_version = 30 /* android 11 */
+build_versions.min_sdk_version = 24
+build_versions.target_sdk_version = 30
 build_versions.compile_sdk_version = 30
 build_versions.build_tools_version = "31.0.0"
 build_versions.version_code = 1

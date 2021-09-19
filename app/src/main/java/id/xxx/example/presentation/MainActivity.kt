@@ -1,13 +1,22 @@
 package id.xxx.example.presentation
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import id.xxx.example.databinding.ActivityMainBinding
+import id.xxx.example.native.Native
+import java.util.concurrent.Executors
+import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
+    private val executor = Executors.newCachedThreadPool()
+
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,18 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        Log.i("TAG", "onCreate: ${stringFromJNI()}")
-        Log.i("TAG", "onCreate: ${stringFromJNI2()}")
-    }
-
-
-    private external fun stringFromJNI(): String
-
-    private external fun stringFromJNI2(): String
-
-    companion object {
-        init {
-            System.loadLibrary("app")
-        }
+        Log.i("${this::class.java.simpleName}\$onCreate()", Native.example())
     }
 }

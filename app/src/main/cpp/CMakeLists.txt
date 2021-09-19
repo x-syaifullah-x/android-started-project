@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10.2)
 
 # Declares and names the project.
-project("Android Started Project With JNI")
+project("example")
 
 add_executable(
-        test
-        executable/Test.cpp
+        ${PROJECT_NAME}.out
+        exe/main.cpp
 )
 
 
@@ -15,14 +15,13 @@ add_executable(
 # Gradle automatically packages shared libraries with your APK.
 add_library(
         # Sets the name of the library.
-        app
+        ${PROJECT_NAME}
 
         # Sets the library as a shared library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        source/native-lib2.cpp
-        source/native-lib.cpp
+        shared/example.cpp
 )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -44,7 +43,7 @@ find_library(
 # build script, prebuilt third-party libraries, or system libraries.
 target_link_libraries(
         # Specifies the target library.
-        app
+        ${PROJECT_NAME}
 
         # Links the target library to the log library
         # included in the NDK.
