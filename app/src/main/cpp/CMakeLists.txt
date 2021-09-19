@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.10.2)
 
-# Declares and names the project.
 project("example")
 
 add_executable(
-        ${PROJECT_NAME}.out
+        example_
         exe/main.cpp
 )
-
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -15,7 +13,7 @@ add_executable(
 # Gradle automatically packages shared libraries with your APK.
 add_library(
         # Sets the name of the library.
-        ${PROJECT_NAME}
+        example
 
         # Sets the library as a shared library.
         SHARED
@@ -43,7 +41,7 @@ find_library(
 # build script, prebuilt third-party libraries, or system libraries.
 target_link_libraries(
         # Specifies the target library.
-        ${PROJECT_NAME}
+        example
 
         # Links the target library to the log library
         # included in the NDK.

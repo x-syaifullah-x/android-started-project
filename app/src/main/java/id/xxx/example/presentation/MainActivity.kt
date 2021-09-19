@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import id.xxx.example.databinding.ActivityMainBinding
 import id.xxx.example.native.Native
 import java.util.concurrent.Executors
-import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity() {
 
